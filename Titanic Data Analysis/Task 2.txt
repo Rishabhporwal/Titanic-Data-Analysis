@@ -1,0 +1,21 @@
+2.In this problem statement we will find the number of people alive in each class and are embarked in Southampton.
+
+Solution : 
+
+Titanic_Data = LOAD '/home/acadgild/data/TitanicData.txt' using PigStorage(',') AS (pid:int,survived:int,pclass:int,pname:chararray,sex:chararray,age:int,sibsp:int,parch:int,tkt:chararray,fare:float,cabin:chararray,embarked:chararray);
+
+filtered_titanic_data = Filter Titanic_Data by embarked matches 'S';
+
+filter_titanic_data_living = Filter filtered_titanic_data by survived==0;
+
+grouped_filtered_titanic_data = group filter_titanic_data_living by pclass;
+
+sum_living_titanic = foreach grouped_filtered_titanic_data generate group,COUNT(filter_titanic_data_living.survived);
+
+dump sum_living_titanic;
+
+Output : 
+
+1	53
+2	88
+3	286

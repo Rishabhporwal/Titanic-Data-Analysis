@@ -1,0 +1,18 @@
+3. In this problem statement we will find the number of male and female people died in each class
+
+DATA = LOAD '/home/acadgild/data/TitanicData.txt' using PigStorage(',') as (PassengerId:int, Survived:int, Pclass:int, Name:chararray, Sex:chararray, Age:int ,SibSp:int, parch:int, Ticket:chararray, Fare:float, Cabin:chararray, Embarked:chararray);
+NumDied = FILTER DATA BY Survived == 1;
+
+MenDied = FILTER NumDied BY Sex == 'male';
+GrpMen = GROUP MenDied ALL;
+CntMen = FOREACH GrpMen GENERATE COUNT(MenDied);
+
+WomenDied = FILTER NumDied BY Sex == 'female';
+GrpWomen = GROUP WomenDied ALL;
+CntWomen = FOREACH GrpWomen GENERATE COUNT(WomenDied);
+
+DUMP CntMen;
+Output : (109)
+
+DUMP CntWomen;
+Output : (233)

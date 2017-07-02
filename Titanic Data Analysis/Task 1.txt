@@ -1,0 +1,18 @@
+1.In this problem statement we will find the average fare of each class.
+
+Solution : 
+
+Titanic_Data = LOAD '/home/acadgild/data/TitanicData.txt' using PigStorage(',') AS (pid:int,survived:int,pclass:int,pname:chararray,sex:chararray,age:int,sibsp:int,parch:int,tkt:chararray,fare:float,cabin:chararray,embarked:chararray);
+
+group_titanic_data = group Titanic_Data by pclass;
+
+avg_titanic_data = foreach group_titanic_data generate group, AVG(Titanic_Data_All.fare);
+
+dump avg_titanic_data ;
+
+Output : 
+
+1	84.15468752825701
+2	20.66218318109927
+3	13.675550210257411
+
